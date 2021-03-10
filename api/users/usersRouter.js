@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
             res.status(401).json({error: 'Invalid email or password'})
         }
 
-    } else {if(await bcrypt.compare())
+    } else {
         res.status(400).json({error: 'Must include email and password'})
     }
 })
