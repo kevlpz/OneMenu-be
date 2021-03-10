@@ -40,12 +40,12 @@ exports.up = function(knex) {
         .onDelete("CASCADE")
         .onUpdate("CASCADE")
       tbl.integer('category_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('categories')
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE")
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('categories')
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
     })
 };
 
