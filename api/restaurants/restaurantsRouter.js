@@ -24,14 +24,25 @@ router.get('/:id', async (req, res) => {
 router.post('/', authorize, (req, res) => {
     const { id } = req.user
     const { restaurant } = req.body
-    console.log('restaurant: ', restaurant)
-    console.log('id: ', id)
 
     Restaurants.add({restaurant, user_id: id})
         .then(restaurant => res.status(201).json(restaurant))
         .catch(err => {
             console.log(err)
             res.status(500).json({error: 'Internal server error'})
+        })
+})
+
+// delete restaurant
+router.delete('/', authorize, (req, res) => {
+    const restaurantID = req.body.id
+    const userID = req.user.id
+
+    Restaurants.deleteRestaurant(restaurantID, userID)
+        .then(() => res.status(200).json({message: 'Successfully deleted'}))
+        .catch(err => {
+            console.log(err)
+            res.status(404).json({error: 'Restaurant not found'})
         })
 })
 
@@ -43,7 +54,6 @@ function authorize(req, res, next) {
             if(err) {
                 res.status(401).json({error: 'Unauthorized'})
             } else {
-                console.log('decodedToken: ', decodedToken)
                 req.user = {email: decodedToken.email, id: decodedToken.id}
                 req.user.id = decodedToken.id
                 next()

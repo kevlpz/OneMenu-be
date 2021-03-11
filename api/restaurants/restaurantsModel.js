@@ -4,7 +4,8 @@ module.exports = {
     getByNameAndUserID,
     getById,
     getCategories,
-    add
+    add,
+    deleteRestaurant
 }
 
 function getByNameAndUserID(restaurant, userID) {
@@ -22,7 +23,7 @@ function getById(id) {
 function getCategories(restaurantID) {
     return db('categories')
         .where({ restaurant_id: restaurantID })
-}
+} 
 
 function add(restaurant) {
     return db('restaurants')
@@ -34,4 +35,10 @@ function getRestaurantById(id) {
     return db('restaurants')
         .where({id: id})
         .first()
+}
+
+function deleteRestaurant(restaurantID, userID) {
+    return db('restaurants')
+        .where({id: restaurantID, user_id: userID})
+        .del()
 }
