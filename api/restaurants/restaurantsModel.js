@@ -3,7 +3,8 @@ const db = require('../../data/knexConfig')
 module.exports = {
     getByNameAndUserID,
     getById,
-    getCategories
+    getCategories,
+    add
 }
 
 function getByNameAndUserID(restaurant, userID) {
@@ -20,5 +21,17 @@ function getById(id) {
 
 function getCategories(restaurantID) {
     return db('categories')
-        .where({restaurant_id: restaurantID})
+        .where({ restaurant_id: restaurantID })
+}
+
+function add(restaurant) {
+    return db('restaurants')
+        .insert(restaurant, 'id')
+        .then(([id]) => getRestaurantById(id))
+}
+
+function getRestaurantById(id) {
+    return db('restaurants')
+        .where({id: id})
+        .first()
 }

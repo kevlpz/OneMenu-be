@@ -20,6 +20,21 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+// add restaurant
+router.post('/', authorize, (req, res) => {
+    const { id } = req.user
+    const { restaurant } = req.body
+    console.log('restaurant: ', restaurant)
+    console.log('id: ', id)
+
+    Restaurants.add({restaurant, user_id: id})
+        .then(restaurant => res.status(201).json(restaurant))
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({error: 'Internal server error'})
+        })
+})
+
 function authorize(req, res, next) {
     const token = req.headers.authorization
 
@@ -28,12 +43,14 @@ function authorize(req, res, next) {
             if(err) {
                 res.status(401).json({error: 'Unauthorized'})
             } else {
-                req.user = {email: decodedToken.email}
+                console.log('decodedToken: ', decodedToken)
+                req.user = {email: decodedToken.email, id: decodedToken.id}
+                req.user.id = decodedToken.id
                 next()
             }
         })
     } else {
-        res.status(400).json({error: 'Must include email and password'})
+        res.status(401).json({error: 'Unauthorized'})
     }
 }
 
