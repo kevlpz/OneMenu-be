@@ -1,10 +1,10 @@
 
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema
     .createTable('users', tbl => {
-        tbl.increments()
-        tbl.string('email').notNullable().unique()
-        tbl.string('password').notNullable()
+      tbl.increments()
+      tbl.string('email').notNullable().unique()
+      tbl.string('password').notNullable()
     })
     .createTable('restaurants', tbl => {
       tbl.increments()
@@ -49,7 +49,7 @@ exports.up = function(knex) {
     })
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema
     .dropTableIfExists('dishes')
     .dropTableIfExists('categories')
