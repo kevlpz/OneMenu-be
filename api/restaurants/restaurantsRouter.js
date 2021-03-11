@@ -33,7 +33,7 @@ router.post('/', authorize, (req, res) => {
         })
 })
 
-// update restaurant
+// update restaurant name
 router.put('/:id', authorize, (req, res) => {
     const restaurantID = req.params.id
     const restaurantUpdate = req.body.restaurant
