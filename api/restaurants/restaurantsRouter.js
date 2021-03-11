@@ -4,8 +4,20 @@ const jwt = require('jsonwebtoken')
 
 const router = express.Router()
 
-router.get('/:', (req, res) => {
-    
+// get menu by restaurant id
+router.get('/:id', async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const items = Restaurants.getById(id)
+        const categories = Restaurants.getCategories(id)
+        const menu = await Promise.all([items, categories])
+
+        res.status(200).json({items: menu[0], categories: menu[1]})
+    } catch(err) {
+        console.log(err)
+        res.status(404).json({error: 'Restaurant not found'})
+    }
 })
 
 function authorize(req, res, next) {
