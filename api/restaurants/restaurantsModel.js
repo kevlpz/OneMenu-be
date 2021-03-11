@@ -1,18 +1,11 @@
 const db = require('../../data/knexConfig')
 
 module.exports = {
-    getByNameAndUserID,
     getById,
     getCategories,
     add,
     updateRestaurant,
     deleteRestaurant
-}
-
-function getByNameAndUserID(restaurant, userID) {
-    return db('restaurants')
-        .where({ restaurant, user_id: userID })
-        .fisrt()
 }
 
 function getById(id) {

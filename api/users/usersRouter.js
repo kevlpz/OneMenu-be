@@ -10,13 +10,18 @@ router.post('/register', async (req, res) => {
     const { email, password } = req.body
 
     if (email && password) {
-        const hashedPassword = await bcrypt.hash(password, 10)
-        Users.add({ email: email.toLowerCase(), password: hashedPassword })
-            .then(user => res.status(201).json({ ...user, password: undefined }))
-            .catch(err => {
-                console.log(err)
-                res.status(500).json({ error: 'Internal server error' })
-            })
+        try {
+            const hashedPassword = await bcrypt.hash(password, 10)
+            Users.add({ email: email.toLowerCase(), password: hashedPassword })
+                .then(user => res.status(201).json({ ...user, password: undefined }))
+                .catch(err => {
+                    console.log(err)
+                    res.status(500).json({ error: 'Internal server error' })
+                })
+        } catch(err) {
+            console.log(err)
+            res.status(500).json({error: 'Internal server error'})
+        }
     } else {
         res.status(400).json({ error: 'Must include email and password' })
     }
@@ -38,9 +43,9 @@ router.post('/login', async (req, res) => {
             } else {
                 res.status(401).json({ error: 'Invalid email or password' })
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err)
-            res.status(404).json({error: 'User not found'})
+            res.status(404).json({ error: 'User not found' })
         }
 
     } else {
