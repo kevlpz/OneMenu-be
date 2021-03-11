@@ -33,12 +33,26 @@ router.post('/', authorize, (req, res) => {
         })
 })
 
+// update restaurant
+router.put('/:id', authorize, (req, res) => {
+    const restaurantID = req.params.id
+    const restaurantUpdate = req.body.restaurant
+    const userID = req.user.id
+
+    Restaurants.updateRestaurant(restaurantUpdate, restaurantID, userID)
+        .then(() => res.status(201).json({message: 'Successfully updated'}))
+        .catch(err => {
+            console.log(err)
+            res.status(404).json({error: 'Could not find restaurant'})
+        })
+})
+
 // delete restaurant
 router.delete('/', authorize, (req, res) => {
     const restaurantID = req.body.id
     const userID = req.user.id
 
-    Restaurants.deleteRestaurant(restaurantID, userID)
+    Restaurants.deleteRestaurant(restaurantUpdate, restaurantID, userID)
         .then(() => res.status(200).json({message: 'Successfully deleted'}))
         .catch(err => {
             console.log(err)

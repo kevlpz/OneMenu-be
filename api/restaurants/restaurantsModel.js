@@ -5,6 +5,7 @@ module.exports = {
     getById,
     getCategories,
     add,
+    updateRestaurant,
     deleteRestaurant
 }
 
@@ -35,6 +36,12 @@ function getRestaurantById(id) {
     return db('restaurants')
         .where({id: id})
         .first()
+}
+
+function updateRestaurant(restaurantUpdate, restaurantID, userID) {
+    return db('restaurants')
+        .where({id: restaurantID, user_id: userID})
+        .update({restaurant: restaurantUpdate})
 }
 
 function deleteRestaurant(restaurantID, userID) {
