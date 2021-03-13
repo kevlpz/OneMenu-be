@@ -1,6 +1,6 @@
 const express = require('express')
 const Restaurants = require('./restaurantsModel')
-const jwt = require('jsonwebtoken')
+const authorize = require('../utils/authorize')
 
 const router = express.Router()
 
@@ -9,7 +9,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params
 
     try {
-        const items = Restaurants.getById(id)
+        const items = Restaurants.getMenuById(id)
         const categories = Restaurants.getCategories(id)
         const menu = await Promise.all([items, categories])
 
@@ -59,23 +59,5 @@ router.delete('/', authorize, (req, res) => {
             res.status(404).json({error: 'Restaurant not found'})
         })
 })
-
-function authorize(req, res, next) {
-    const token = req.headers.authorization
-
-    if(token) {
-        jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
-            if(err) {
-                res.status(401).json({error: 'Unauthorized'})
-            } else {
-                req.user = {email: decodedToken.email, id: decodedToken.id}
-                req.user.id = decodedToken.id
-                next()
-            }
-        })
-    } else {
-        res.status(401).json({error: 'Unauthorized'})
-    }
-}
 
 module.exports = router

@@ -30,12 +30,10 @@ router.post('/register', async (req, res) => {
 // login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
-    console.log(email, password)
 
     if (email && password) {
         try {
             const user = await Users.getByEmail(email)
-            console.log('user: ', user)
 
             if (await bcrypt.compare(password, user.password)) {
                 const token = generateToken(user)

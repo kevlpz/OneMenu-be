@@ -2,6 +2,7 @@ const db = require('../../data/knexConfig')
 
 module.exports = {
     getById,
+    getMenuById,
     getCategories,
     add,
     updateRestaurant,
@@ -9,6 +10,12 @@ module.exports = {
 }
 
 function getById(id) {
+    return db('restaurants')
+        .where({id: id})
+        .first()
+}
+
+function getMenuById(id) {
     return db('restaurants')
         .join('dishes', 'restaurants.id', 'dishes.restaurant_id')
         .where({ restaurant_id: id })
