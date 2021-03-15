@@ -18,8 +18,9 @@ function add(category) {
         .then(([id]) => getById(id))
 }
 
-function remove(id) {
+function remove(category) {
+    const { id, restaurant_id } = category
     return db('categories')
-        .where({id: id})
+        .where({id: id, restaurant_id: restaurant_id})
         .del()
 }
