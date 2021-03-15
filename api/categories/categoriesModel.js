@@ -2,7 +2,8 @@ const db = require('../../data/knexConfig')
 
 module.exports = {
     getById,
-    add
+    add,
+    remove
 }
 
 function getById(id) {
@@ -13,7 +14,12 @@ function getById(id) {
 
 function add(category) {
     return db('categories')
-        
         .insert(category, 'id')
         .then(([id]) => getById(id))
+}
+
+function remove(id) {
+    return db('categories')
+        .where({id: id})
+        .del()
 }
