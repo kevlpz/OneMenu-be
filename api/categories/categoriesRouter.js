@@ -32,4 +32,20 @@ router.delete('/:id', authorize, authorizeRestaurant, (req, res) => {
         })
 })
 
+// update category
+router.put('/:id', authorize, authorizeRestaurant, (req, res) => {
+    const category = {
+        categoryName: req.body.category,
+        id: req.params.id,
+        restaurant_id: req.body.restaurant_id
+    }
+
+    Categories.update(category)
+        .then(category => res.status(201).json(category))
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({error: 'Internal server error'})
+        })
+})
+
 module.exports = router
