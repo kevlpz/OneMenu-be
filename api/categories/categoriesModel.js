@@ -21,7 +21,6 @@ function add(category) {
 
 function update(category) {
     const { id, categoryName, restaurant_id } = category
-    console.log('category: ', category)
 
     return db('categories')
         .where({id: id, restaurant_id: restaurant_id})

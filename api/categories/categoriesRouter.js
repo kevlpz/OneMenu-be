@@ -6,7 +6,7 @@ const Categories = require('./categoriesModel')
 const router = express.Router()
 
 // add category
-router.post('/', authorize, authorizeRestaurant, (req, res) => {
+router.post('/', (req, res) => {
     const category = req.body
 
     Categories.add(category)
@@ -18,7 +18,7 @@ router.post('/', authorize, authorizeRestaurant, (req, res) => {
 })
 
 // delete category
-router.delete('/:id', authorize, authorizeRestaurant, (req, res) => {
+router.delete('/:id', (req, res) => {
     const category = {
         id: req.params.id,
         restaurant_id: req.body.restaurant_id
@@ -33,7 +33,7 @@ router.delete('/:id', authorize, authorizeRestaurant, (req, res) => {
 })
 
 // update category
-router.put('/:id', authorize, authorizeRestaurant, (req, res) => {
+router.put('/:id', (req, res) => {
     const category = {
         categoryName: req.body.category,
         id: req.params.id,
