@@ -1,6 +1,4 @@
 const express = require('express')
-const authorize = require('../utils/authorize')
-const authorizeRestaurant = require('../utils/authorizeRestaurant')
 const Categories = require('./categoriesModel')
 
 const router = express.Router()
