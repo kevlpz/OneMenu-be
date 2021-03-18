@@ -8,6 +8,7 @@ const authorizeRestaurant = require('./utils/authorizeRestaurant')
 const usersRouter = require('./users/usersRouter')
 const restaurantsRouter = require('./restaurants/restaurantsRouter')
 const categoriesRouter = require('./categories/categoriesRouter')
+const dishesRouter = require('./dishes/dishesRouter')
 
 // server.use(cors({
 //     origin: 'https://wsky-fe.herokuapp.com',
@@ -19,5 +20,6 @@ server.use(express.json())
 server.use('/users', usersRouter)
 server.use('/restaurants', restaurantsRouter)
 server.use('/categories', authorize, authorizeRestaurant, categoriesRouter)
+server.use('/dishes', authorize, authorizeRestaurant, dishesRouter)
 
 module.exports = server
