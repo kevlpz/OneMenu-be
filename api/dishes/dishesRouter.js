@@ -29,4 +29,19 @@ router.delete('/', (req, res) => {
     }
 })
 
+router.put('/', (req, res) => {
+    const dish = req.body
+
+    if(dish.id && dish.restaurant_id && dish.category_id) {
+        Dishes.update(dish)
+            .then(dish => res.status(201).json(dish))
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({error: 'Internal server error'})
+            })
+    } else {
+        res.status(400).json({error: 'Must include dish id, restaurant_id, and category_id'})
+    }
+})
+
 module.exports = router
