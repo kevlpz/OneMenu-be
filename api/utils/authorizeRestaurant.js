@@ -4,7 +4,7 @@ module.exports = async function(req, res, next) {
     const { restaurant_id } = req.body
     const user_id = req.user.id
     
-    try{
+    try {
         const restaurant = await Restaurants.getById(restaurant_id)
         if(restaurant.user_id === user_id) {
             next()
