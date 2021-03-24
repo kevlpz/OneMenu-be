@@ -11,7 +11,7 @@ const categoriesRouter = require('./categories/categoriesRouter')
 const dishesRouter = require('./dishes/dishesRouter')
 
 // server.use(cors({
-//     origin: 'http://localhost:5000',
+//     origin: 'http://localhost:3000',
 //     credentials: true
 // }))
 server.use(helmet())
